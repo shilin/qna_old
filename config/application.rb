@@ -22,11 +22,11 @@ module Qna
     config.generators do |g|
       g.test_framework :rspec,
                         fixtures: true,
-                        view_spec: false,
+                        view_specs: false,
                         helper_specs: false,
                         routing_specs: false,
-                        request_spec: false,
-                        controller_spec: true
+                        request_specs: false,
+                        controller_specs: true
       g.fixture_replacement :factory_girl, dir: 'spec/factories'
     end
   end
