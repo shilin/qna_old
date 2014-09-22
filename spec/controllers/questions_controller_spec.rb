@@ -25,12 +25,24 @@ RSpec.describe QuestionsController, :type => :controller do
       end
 
       it 'redirects a show view' do
-        post :create, question: attributes_for(:question) 
+        post :create, question: attributes_for(:question)
         expect(response).to redirect_to question_path(assigns(:question))
       end
 
     end
 
+    context 'with invalid attributes' do
+      it 'creates a new question and fails to save it into database' do
+        expect { post :create, question: {title: 'title' }}.to_not change(Question, :count)
+      end
+
+
+      it 'redirects back to a new view' do
+        post :create, question: {title:  'title'}
+        expect(response).to redirect_to new_question_path
+      end
+
+    end
   end
 
 end

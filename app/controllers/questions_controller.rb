@@ -5,9 +5,15 @@ class QuestionsController < ApplicationController
   end
   
   def create
-    @question = Question.create(question_params)
-    flash[:notice] = 'Вопрос успешно задан'
-    redirect_to @question
+    @question = Question.new(question_params)
+
+    if @question.save
+      flash[:notice] = 'Вопрос успешно задан'
+      redirect_to @question
+    else
+      redirect_to new_question_path
+    end
+
   end
   
   def show

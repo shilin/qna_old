@@ -15,9 +15,11 @@ I want to be able to ask questions
 
   scenario 'User tries to submit a invalid question' do
     visit new_question_path
-    #fill_in 'Title', with: 'Sample Title'
-    fill_in 'Text', with: 'Sample Body'
+    fill_in 'Title', with: 'Sample Title'
+    #fill_in 'Text', with: 'Sample Body'
     click_on 'Create'
-    expect(page).to have_content 'вопрос не создан'
+
+    expect(current_path).to eq new_question_path
+
   end
 end
