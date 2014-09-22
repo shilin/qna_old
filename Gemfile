@@ -34,8 +34,8 @@ group :test, :development do
 end
 
 group :test do
-  gem 'shoulda-matchers'
   gem 'capybara'
+  gem 'shoulda-matchers'
 end
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
