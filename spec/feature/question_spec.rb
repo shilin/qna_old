@@ -20,6 +20,5 @@ I want to be able to ask questions
     click_on 'Create'
 
     expect(current_path).to eq new_question_path
-
   end
 end
