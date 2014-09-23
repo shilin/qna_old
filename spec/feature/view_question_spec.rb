@@ -6,10 +6,11 @@ As a user
 I want to be able view questions
 } do
   scenario 'User opens questions page' do
+    # Question.create!(title: 'QuestionTitle', body: 'QuestionBody')
+    2.times {Question.create!(title: 'QuestionTitle', body: 'QuestionBody')}
     visit questions_path
-    save_and_open_page
 
-    expect(page).to have_content 'Список вопросов'
+    expect(page).to have_content 'QuestionTitle', count: 2
   end
 
 end
