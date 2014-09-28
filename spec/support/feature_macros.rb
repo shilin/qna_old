@@ -1,9 +1,8 @@
 module FeatureMacros
-  def login_user
-    User.create!(email: 'user@test.com', password: '12345678')
+  def sign_in(user)
     visit new_user_session_path
-    fill_in 'Email', with: 'user@test.com'
-    fill_in 'Password', with: '12345678'
+    fill_in 'Email', with: user.email
+    fill_in 'Password', with: user.password
     click_on 'Log in'
   end
 end

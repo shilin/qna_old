@@ -5,8 +5,9 @@ In order to be able to ask questions
 As a user
 I want to be able to sign in
 } do
+  given(:user) {create :user}
   scenario 'Registered user tries to sign in' do
-    login_user
+    sign_in(user)
     expect(page).to have_content 'Signed in successfully'
     expect(current_path).to eq root_path
   end
