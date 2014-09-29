@@ -8,7 +8,7 @@ I want to be able to create answers
 
   given(:user) {create(:user)}
   given(:question) {create(:question)}
-  scenario 'Authenticated user creates an answer' do
+  scenario 'Authenticated user creates an answer', js: true do
     sign_in(user)
     visit question_path(question)
     fill_in  'Your answer', with: 'MyAnswer'
