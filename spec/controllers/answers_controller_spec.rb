@@ -11,20 +11,20 @@ RSpec.describe AnswersController, :type => :controller do
         expect { post :create, question_id: question.id, answer: attributes_for(:answer), format: :js }.to change(question.answers, :count).by(1)
       end
 
-    #  it 'stays on question page' do
-    #    post :create, answer: attributes_for(:answer), question_id: question 
-    #    expect(response).to eq question_path(question)
-    #  end
+      it 'renders create.js template' do
+        post :create, answer: attributes_for(:answer), question_id: question, format: :js
+        expect(response).to render_template  :create
+      end
     end
 
     context 'with invalid attributes' do
       it 'fails to save an answer' do
         expect { post :create, answer: attributes_for(:invalid_answer), question_id: question, format: :js }.to_not change(Answer, :count)
       end
-    #  it 'redirects to question show view' do
-    #    post :create, answer:  attributes_for(:invalid_answer), question_id: question
-    #    expect(response).to redirect_to question_path(question)
-    #  end
+      it 'renders create.js template' do
+        post :create, answer:  attributes_for(:invalid_answer), question_id: question, format: :js
+        expect(response).to render_template :create
+      end
     end
 
   end
