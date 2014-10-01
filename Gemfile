@@ -38,8 +38,8 @@ group :test do
   gem 'capybara'
   gem 'shoulda-matchers'
   gem 'launchy'
-  gem 'selenium-webdriver'
   gem 'database_cleaner'
+  gem 'capybara-webkit'
 end
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
