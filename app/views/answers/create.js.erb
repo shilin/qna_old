@@ -1,3 +1,12 @@
-$('.answers').html('<%= j render "questions/answers" %>')
-$('#answer_body').val('')
-dataType: 'script'
+<% if @answer.errors.present? %>
+    <% @answer.errors.full_messages.each do |message| %>
+    $('#answer-errors').show().html('<%= j message %>');
+    <% end %>
+
+
+  <% else %>
+    $('.answers').html('<%= j render "questions/answers" %>');
+    $('#answer_body').val('');
+    $('#answer-errors').hide();
+
+  <% end %>

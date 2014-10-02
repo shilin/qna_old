@@ -4,6 +4,7 @@ p= @question.body
 .answers
   = render 'answers'
 
+#answer-errors
 = form_for [@question, @answer], remote: true do |f|
   = f.label :body, 'Your answer'
   = f.text_area :body
