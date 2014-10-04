@@ -9,6 +9,6 @@ html
     - flash.each do |key, value|
       = content_tag(:div, value, class: "#{key}")
     ul.hmenu
-      / = render 'devise/menu/registration_items'
+      = render 'devise/shared/registration_items'
       = render 'devise/shared/login_items'
     = yield
