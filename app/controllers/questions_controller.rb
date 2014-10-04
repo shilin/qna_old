@@ -16,6 +16,7 @@ class QuestionsController < ApplicationController
   
   def create
     @question = Question.new(question_params)
+    @question.user = current_user
 
     if @question.save
       flash[:notice] = 'Вопрос успешно задан'
@@ -39,7 +40,9 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
-    @question.destroy
+    if @question.destroy
+      flash[:notice] = 'Your question has been successfully deleted'
+    end
     redirect_to questions_path
   end
 
@@ -50,6 +53,6 @@ class QuestionsController < ApplicationController
   end
 
   def question_params
-    params.require(:question).permit(:title, :body)
+    params.require(:question).permit(:title, :body, :user_id)
   end
 end

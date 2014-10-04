@@ -1,4 +1,8 @@
-h1= @question.title
+h1
+  =' @question.title
+  - if @question.user.eql?(current_user)
+    span.question-delete= link_to('Delete', @question, method: :delete)
+  /= link_to 'Delete' if question.user.eql?(current_user)
 p= @question.body
 
 .answers
