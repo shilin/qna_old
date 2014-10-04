@@ -6,10 +6,16 @@ feature 'User can register', %q{
   I want to be able to register
 } do
 
+    before do
+      visit root_path
+      click_on 'Register'
+    end
+
   describe 'not registered user' do
 
+
+
     scenario 'tries to sign up' do
-      visit new_user_registration_path
       fill_in  'Email', with: 'user@test.com'
       fill_in 'Password', with: '12345678'
       fill_in 'Password confirmation', with: '12345678'
@@ -18,7 +24,6 @@ feature 'User can register', %q{
     end
 
     scenario 'tries to sign up with password typo' do
-      visit new_user_registration_path
       fill_in  'Email', with: 'user@test.com'
       fill_in 'Password', with: '12345678'
       fill_in 'Password confirmation', with: '12345679999999'
@@ -29,10 +34,9 @@ feature 'User can register', %q{
   end
 
   describe 'Registered user' do
-    let(:user) { create :user }
+    let!(:user) { create :user }
 
     scenario 'tries to sign up' do
-      visit new_user_registration_path
       fill_in  'Email', with: user.email
       fill_in 'Password', with: user.password
       fill_in 'Password confirmation', with: user.password_confirmation
