@@ -20,8 +20,22 @@ feature 'Author can delete his question', %q{
 
       scenario 'tries to delete the question' do
         visit question_path(question)
-        click_on 'Delete'
+        within('.question-delete') do
+          click_on 'Delete'
+        end
         expect(page).to have_content 'Your question has been successfully deleted'
+      end
+
+      scenario 'tries to edit his own answer', js: true do
+        visit question_path(question)
+        within('.question-edit') do
+          click_on 'Edit'
+          fill_in 'Question', with: 'edited question'
+          click_on 'Save'
+          expect(page).to_not have_content question.body
+          expect(page).to have_content 'edited question'
+          expect(page).to_not have_selector 'textarea'
+        end
       end
 
     end
