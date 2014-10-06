@@ -1,7 +1,7 @@
 class QuestionsController < ApplicationController
 
   before_action :authenticate_user!, only: [:edit, :new, :update, :create, :destroy]
-  before_action :load_question, only: [:show, :edit, :update, :destroy]
+  before_action :load_question, only: [:show, :update, :edit, :destroy]
 
   def index
     @questions = Question.all
@@ -32,13 +32,12 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    @question = Answer.find(params[:id])
-    @question.update(answer_params)
+    @question.update(question_params) if @question.user == current_user
   end
 
   def destroy
-    if @question.destroy
-      flash[:notice] = 'Your question has been successfully deleted'
+    if  @question.user == current_user
+      flash[:notice] = 'Your question has been successfully deleted' if @question.destroy
     end
     redirect_to questions_path
   end

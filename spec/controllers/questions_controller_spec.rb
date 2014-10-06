@@ -148,39 +148,26 @@ RSpec.describe QuestionsController, :type => :controller do
       sign_in_user
 
       context 'with valid attributes' do
-        it 'updates the requested question' do
-          patch :update, id: question, question: attributes_for(:question)
+        it 'fails to update the requested question' do
+          patch :update, id: question, question: {title: "UpdatedTitle", body: "UpdatedBody"}, format: :js
           expect(assigns(:question)).to eq question
         end
-
-        it 'changes attributes' do
-          patch :update, id: question, question: {title: "UpdatedTitle", body: "UpdatedBody"}
-          question.reload
-          expect(question.title).to eq "UpdatedTitle"
-          expect(question.body).to eq "UpdatedBody"
-        end
-
-        it 'redirects to updated question' do
-          patch :update, id: question, question: {title: "UpdatedTitle", body: "UpdatedBody"}
-          expect(response).to redirect_to question
-        end
-
       end
 
-      context 'with invalid attributes' do
-
-        it 'fails to change attributes' do
-          patch :update, id: question, question: attributes_for(:invalid_question)
-          question.reload
-          expect(question.title).to  eq "QuestionTitle"
-          expect(question.body).to   eq "QuestionBody"
+      context 'is author' do
+        user_is_question_author
+        context 'with valid attributes' do
+          it 'updates the requested question' do
+            patch :update, id: question, question: {title: "UpdatedTitle", body: "UpdatedBody"}, format: :js
+            expect(assigns(:question)).to eq question
+          end
         end
 
-        it 'redirects to edit view' do
-          patch :update, id: question, question: attributes_for(:invalid_question)
-          expect(response).to render_template :edit
-        end
-
+        it 'updates the attributes' do
+            patch :update, id: question, question: {title: "UpdatedTitle", body: "UpdatedBody"}, format: :js
+            expect(assigns(:question).body).to eq "UpdatedBody"
+            expect(assigns(:question).title).to eq "UpdatedTitle"
+        end 
       end
 
     end
@@ -188,14 +175,13 @@ RSpec.describe QuestionsController, :type => :controller do
     context 'Unauthenticated user' do
 
       it 'fails to change question attributes' do
-        patch :update, id: question, question: {title: 'newtitle', body: 'newbody'}
-        question.reload
+        patch :update, id: question, question: {title: 'newtitle', body: 'newbody'}, format: :js
         expect(assigns(:question)).to_not eq question
       end
 
-      it 'redirects to sign_in' do
-        patch :update, id: question, question: { title: 'newtitle', body: 'newbody' }
-        expect(response).to redirect_to new_user_session_path
+      it 'responses with 401 unauthorized' do
+        patch :update, id: question, question: { title: 'newtitle', body: 'newbody' }, format: :js
+        expect(response.response_code).to eq 401
       end
 
     end
@@ -203,21 +189,32 @@ RSpec.describe QuestionsController, :type => :controller do
 
   describe 'DELETE #destroy' do
 
-    describe 'Authenticated user' do
+    context 'Authenticated user' do
       sign_in_user
 
-      it 'deletes the question' do
+      it 'fails to delete the question' do
         question
-        expect { delete :destroy, id: question }.to change(Question, :count).by(-1)
+        expect { delete :destroy, id: question }.to_not change(Question, :count)
+      end
+      it 'redirects to index view' do
+        delete :destroy, id: question
+        expect(response).to redirect_to questions_path
       end
 
-      it 'redirects to index view' do
-        delete :destroy, id: question 
-        expect(response).to redirect_to questions_path
+      context 'is author' do
+        user_is_question_author
+        it 'deletes the question' do
+          expect { delete :destroy, id: question }.to change(Question, :count).by(-1)
+        end
+        it 'redirects to index view' do
+          delete :destroy, id: question
+          expect(response).to redirect_to questions_path
+        end
+
       end
     end
 
-    describe 'Unauthenticated user' do
+    context 'Unauthenticated user' do
 
       it 'fails to delete the question' do
         question

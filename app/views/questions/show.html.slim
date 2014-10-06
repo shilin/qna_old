@@ -1,18 +1,7 @@
-h1
-  =' @question.title
-  - if @question.user.eql?(current_user)
-    span.question-delete=' link_to('Delete', @question, method: :delete)
-    span.question-edit=' link_to('Edit','', class: 'edit-question-link', data: {question_id: @question.id} )
-
-.question-body
-  p= @question.body
-
 .question-errors
-.edit-question-form
-  = form_for @question, remote: true  do |f|
-    = f.label :body, 'Question'
-    = f.text_area :body
-    = f.submit 'Save'
+
+.question
+  = render 'question'
 
 
 .answers

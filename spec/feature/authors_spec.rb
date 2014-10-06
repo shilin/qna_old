@@ -28,7 +28,7 @@ feature 'Author can delete his question', %q{
 
       scenario 'tries to edit his own answer', js: true do
         visit question_path(question)
-        within('.question-edit') do
+        within('.question') do
           click_on 'Edit'
           fill_in 'Question', with: 'edited question'
           click_on 'Save'
@@ -43,9 +43,16 @@ feature 'Author can delete his question', %q{
 
       let(:question) { create(:question) }
 
-      scenario 'tries to delete the question' do
+      scenario 'fails to delete the question' do
         visit question_path(question)
         expect(page).to_not have_link 'Delete'
+      end
+
+      scenario 'fails to edit the question' do
+        visit question_path(question)
+        within('.question') do
+          expect(page).to_not have_link 'Delete'
+        end
       end
 
     end
