@@ -29,6 +29,7 @@ gem 'spring',        group: :development
 gem 'slim-rails'
 gem 'devise'
 gem 'carrierwave'
+gem 'remotipart'
 
 group :test, :development do
   gem 'rspec-rails'
