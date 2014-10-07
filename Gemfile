@@ -28,6 +28,7 @@ gem 'spring',        group: :development
 
 gem 'slim-rails'
 gem 'devise'
+gem 'carrierwave'
 
 group :test, :development do
   gem 'rspec-rails'
