@@ -11,11 +11,12 @@ class AnswersController < ApplicationController
   end
   private
   
-  def answer_params
-    params.require(:answer).permit(:body, attachments_attributes: [:file])
-  end
 
   def load_question
     @question = Question.find(params[:question_id])
+  end
+
+  def answer_params
+    params.require(:answer).permit(:body,  attachments_attributes: [:id, :_destroy, :file] )
   end
 end

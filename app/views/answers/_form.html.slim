@@ -1,0 +1,13 @@
+= nested_form_for [@question, @answer], remote: true do |f|
+  p
+    = f.label :body, 'Your answer'
+  p
+    = f.text_area :body
+  p
+    = f.fields_for :attachments do |a|
+      =' a.label :file
+      = a.file_field :file
+      = a.link_to_remove "Remove file"
+    = f.link_to_add "Add a file", :attachments
+
+  = f.submit

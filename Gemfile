@@ -30,6 +30,7 @@ gem 'slim-rails'
 gem 'devise'
 gem 'carrierwave'
 gem 'remotipart'
+gem 'nested_form'
 
 group :test, :development do
   gem 'rspec-rails'
