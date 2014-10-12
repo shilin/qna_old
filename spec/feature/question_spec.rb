@@ -7,7 +7,8 @@ I want to be able to ask questions
 } do
 
   given(:user) { create(:user) }
-  given(:question) { create(:question) }
+  given(:other_user) { create(:user) }
+  given(:question) { create(:question, user: other_user) }
 
   describe 'Authenticated user' do
     before do

@@ -6,14 +6,15 @@ feature 'Add files to answer', %q{
   I want to be able to attach files
 } do
 
-  given(:user) {create(:user)}
-  given(:question) {create(:question)}
-  
+  given(:user) { create(:user) }
+  given(:author) { create(:user) }
+  given(:question) { create(:question, user: author) }
+
   background do
     sign_in(user)
     visit question_path(question)
   end
-  
+
   scenario 'Adds file when answering question', js: true do
     fill_in 'Your answer', with: 'My answer'
     attach_file "File", "#{Rails.root}/spec/spec_helper.rb"

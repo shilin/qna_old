@@ -7,7 +7,8 @@ I want to be able to create answers
 } do
 
   given(:user) {create(:user)}
-  given(:question) {create(:question)}
+  given(:author) {create(:user)}
+  given(:question) {create(:question, user: author)}
 
   describe 'Authenticated user' do
 
@@ -34,7 +35,10 @@ I want to be able to create answers
 
   describe 'Unauthenticated user' do
 
-    scenario 'tries to create an answer'
+    scenario 'tries to create an answer' do
+      visit question_path(question)
+      expect(page).to_not have_content "Your answer"
+    end
 
   end
 

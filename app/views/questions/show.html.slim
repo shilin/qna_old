@@ -8,13 +8,5 @@
   = render 'answers'
 
 .answer-errors
-= form_for [@question, @answer], remote: true do |f|
-  p
-    = f.label :body, 'Your answer'
-  p
-    = f.text_area :body
-  p
-    = f.fields_for :attachments do |a|
-      =' a.label :file
-      = a.file_field :file
-  = f.submit 'Create'
+-if user_signed_in?
+  = render 'questions/answer_form'

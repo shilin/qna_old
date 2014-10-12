@@ -9,14 +9,15 @@ feature 'Author can delete his question', %q{
 
   describe 'Authenticated user' do
     given(:user) { create(:user) }
+    given(:author) { create(:user) }
 
     before do
-      sign_in(user)
+      sign_in(author)
     end
 
     context 'is author' do
 
-      let(:question) { create(:question, user: user) }
+      let(:question) { create(:question, user: author) }
 
       scenario 'tries to delete the question' do
         visit question_path(question)
@@ -41,7 +42,7 @@ feature 'Author can delete his question', %q{
     end
     context 'is not author' do
 
-      let(:question) { create(:question) }
+      let(:question) { create(:question, user: user) }
 
       scenario 'fails to delete the question' do
         visit question_path(question)

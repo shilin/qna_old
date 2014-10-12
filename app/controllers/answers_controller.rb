@@ -1,5 +1,6 @@
 class AnswersController < ApplicationController
 
+  before_action :authenticate_user!, except:  [:show, :index]
   before_action :load_question, only: [:create, :update]
   def create
     @answer = @question.answers.create(answer_params)

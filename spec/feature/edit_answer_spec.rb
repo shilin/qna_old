@@ -8,7 +8,8 @@ feature 'Answer editing', %q{
 } do
 
   given(:user) { create(:user) }
-  given(:question) { create(:question) }
+  given(:author) { create(:user) }
+  given(:question) { create(:question, user: author) }
   given!(:answer) { create(:answer, question: question)}
 
   scenario 'Unauthenticated user tries to edit answer' do
@@ -21,7 +22,7 @@ feature 'Answer editing', %q{
   describe 'Authenticated user' do
 
     before do
-      sign_in user
+      sign_in(user)
       visit question_path(question)
     end
 
