@@ -34,8 +34,18 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    @question.update(question_params) if @question.user == current_user
+
+    if @question.user == current_user
+      respond_to  do |format|
+        if @question.update(question_params)
+          format.json {render json: @question}
+        else
+          format.json {render json: @question.errors.full_messages, status: :unprocessable_entity}
+        end
+      end
+    end
   end
+
 
   def destroy
     if  @question.user == current_user
